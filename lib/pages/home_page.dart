@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:gadgets/widgets/themes.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../utils/routes.dart';
 import '../widgets/home_widgets/catalog_item.dart';
 import 'home_detail_page.dart';
 
@@ -40,13 +41,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: ()=>{},
-        child: Icon(CupertinoIcons.cart),
+      floatingActionButton: FloatingActionButton(
+        onPressed: ()=>Navigator.pushNamed(context, MyRoutes.cartPage),
         backgroundColor: MyTheme.darkBlue,
+        child: const Icon(CupertinoIcons.cart),
       ),
       backgroundColor: MyTheme.creamColor,
       body: SafeArea(child: Container(
-        padding: Vx.m32,
+        padding: Vx.m16,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
