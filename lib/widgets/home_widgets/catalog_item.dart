@@ -32,7 +32,8 @@ class CatalogItem extends StatelessWidget {
                     "\$${item.price}".text.lg.make(),
                     ElevatedButton(
                       onPressed: (){},
-                      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(MyTheme.darkBlue),shape: MaterialStatePropertyAll(StadiumBorder())),
+                      style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(MyTheme.darkBlue),
+                      shape: MaterialStatePropertyAll(StadiumBorder())),
                       child: "Add to Cart".text.make()
                     ),
                   ],
