@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   loadData() async{
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 2));
     var catalogJson = await rootBundle.loadString("assets/files/catalog.json");// gets the json file as a string from the drirectory
     var decodeData = jsonDecode(catalogJson); //retruns the json object
     var productsData = decodeData["products"]; //from the json object it returns the value of the products key
@@ -56,8 +56,14 @@ class _HomePageState extends State<HomePage> {
             if(CatalogModel.items != null && CatalogModel.items.isNotEmpty)
               const CatalogList().expand()
             else
-            Center(
-              child: CircularProgressIndicator()
+            Expanded(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:[
+                  CircularProgressIndicator(backgroundColor: MyTheme.darkBlue, color: MyTheme.creamColor,),
+                ] 
+              )
             )
           ],
         ),
