@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gadgets/models/catalog.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../core/store.dart';
@@ -18,7 +20,7 @@ class CartPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          _CartList().p32().expand(),
+          _CartList().p16().expand(),
           Divider(),
           _CartTotal(),
           
@@ -43,7 +45,7 @@ class _CartTotal extends StatelessWidget {
             builder: (context,_, __){
               return "\$${_cart.totalPrice}".text.xl4.make();
             },
-            mutations: {RemoveMutation},
+            mutations: {RemoveMutation, DecrementMutation, IncrementMutation},
           ),
           WidthBox(30),
           ElevatedButton(
@@ -70,13 +72,44 @@ class _CartList extends StatelessWidget {
     return _cart.items.isEmpty? "Nothing in your Cart".text.make() : ListView.builder(
       itemCount: _cart.items?.length,
       itemBuilder: (context, index)=> ListTile(
-        leading: Icon(Icons.done),
         trailing: IconButton(
-          onPressed: ()=> RemoveMutation(_cart.items[index]),
-          icon: Icon(Icons.remove)
+          onPressed: ()=> {
+            _cart.items[index].numbers = 1,
+            RemoveMutation(_cart.items[index])
+          },
+          icon: Icon(Icons.delete_outline_rounded)
         ),
-        title: _cart.items[index].name.text.make(),
+        leading: _cart.items[index].name.text.make(),
+        title: Quantity(item: _cart.items[index]),
       ),
+    );
+  }
+}
+
+class Quantity extends StatelessWidget {
+  final Item item;
+  const Quantity({super.key, required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    VxState.watch(context, on:[DecrementMutation, IncrementMutation]);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        IconButton(
+          onPressed: ()=> item.numbers>1? DecrementMutation(item) :() {}, 
+          icon: Icon(CupertinoIcons.minus)
+        ),
+        Container(
+          width: 15,
+          color: Colors.white,
+          child: "${item.numbers}".text.align(TextAlign.center).make(),
+        ),
+        IconButton(
+          onPressed: ()=> item.numbers<5? IncrementMutation(item)  :(){}, 
+          icon: Icon(CupertinoIcons.add)
+        ),
+      ],
     );
   }
 }

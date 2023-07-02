@@ -22,7 +22,7 @@ class CartModel{
   List<Item> get items => _itemIds.map((id) => _catalog.getById(id)).toList();
 
   //Calculate total price
-  num get totalPrice => items.fold(0, (totalPrice, current) => totalPrice + current.price);
+  num get totalPrice => items.fold(0, (totalPrice, current) => totalPrice + (current.price * current.numbers));
 
 }
 
@@ -41,5 +41,23 @@ class RemoveMutation extends VxMutation<MyStore>{
   @override
   perform() {
     store!.cart._itemIds.remove(item.id);
+  }
+} 
+class DecrementMutation extends VxMutation<MyStore>{
+  final Item item;
+  DecrementMutation(this.item);
+  @override
+  perform() {
+    store!.cart._catalog.getById(item.id).numbers--;
+  }
+} 
+class IncrementMutation extends VxMutation<MyStore>{
+  final Item item;
+  IncrementMutation(this.item);
+  @override
+  perform() {
+    // store!.cart._itemIds.add(item.id);
+    // item.numbers++;
+    store!.cart._catalog.getById(item.id).numbers++;
   }
 } 

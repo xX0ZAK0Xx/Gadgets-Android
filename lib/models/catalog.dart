@@ -18,6 +18,7 @@ class Item {
   final num price;
   final String color;
   final String image;
+  int numbers = 1;
 
   Item({required this.id, required this.name, required this.desc, required this.price, required this.color, required this.image});
 
