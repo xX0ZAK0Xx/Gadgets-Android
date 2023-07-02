@@ -39,7 +39,11 @@ class _CartTotal extends StatelessWidget {
           "\$9999".text.xl4.make(),
           WidthBox(30),
           ElevatedButton(
-            onPressed: (){},
+            onPressed: (){
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Center(child:"Buying not supported yet".text.make()),)
+              );
+            },
             style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(MyTheme.darkBlue),
             shape: MaterialStatePropertyAll(StadiumBorder())),
             child: "Buy".text.xl3.make()
